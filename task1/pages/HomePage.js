@@ -1,6 +1,7 @@
 // @ts-ignore
 import { expect } from '@playwright/test';
 
+
 export class HomePage {
     constructor(page) {
         this.page = page;
@@ -44,7 +45,7 @@ export class HomePage {
 
     async isDarkModeOn() {
         const bodyClass = await this.page.locator('body').getAttribute('class');
-        expect(bodyClass).toContain('dark-mode');
+        await expect(bodyClass).toContain('dark-mode');
     }
 
     async clickLanguageSelector() {
@@ -56,7 +57,9 @@ export class HomePage {
     }
 
     async selectUaLanguage() {
-        await this.page.getByRole('link', { name: 'Україна (Українська)' }).click();
+        const uaLangSelector = this.page.getByRole('link', { name: 'Україна (Українська)' });
+        await expect(uaLangSelector).toBeVisible();
+        await uaLangSelector.click();
     }
 
     async isUaSiteOpened() {
